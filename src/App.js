@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { createStaticHandler } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+  //Funççao assincrona fetch para atualizar o usuário existente
+
+  const updateUser = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/users/9fb6", {
+        method: "PUT", //metodo atualiza um registro existente
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          name: "Não tenho ideia",
+          email: "eunaosei@gmail.com",
+        }),
+      });
+      const data = await response.json();
+      console.log("Usuario atualizado:", data);
+    } catch (error) {
+      console.erros("Erro de atualização", error);
+    }
+  };
+
+  return <button onClick={updateUser}>Update</button>;
 }
-
-export default App;
